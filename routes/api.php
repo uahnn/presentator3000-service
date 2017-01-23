@@ -16,3 +16,20 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::get('/', function () {
+    return 'Hello World';
+});
+
+// API STARTS HERE
+Route::resource('presentations', 'PresentationsController');
+
+Route::get('presentations/{id}/slides', 'SlidesController@index');
+Route::post('presentations/{id}/slides', 'SlidesController@store');
+
+Route::resource('slides', 'SlidesController');
+

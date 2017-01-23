@@ -16,8 +16,8 @@ class CreatePresentationSlideJoinTable extends Migration
         Schema::create('presentation_slide', function (Blueprint $table) {
             $table->integer('presentation_id')->unsigned();
             $table->integer('slide_id')->unsigned();
-            $table->integer('slide_prev')->unsigned();
-            $table->integer('slide_next')->unsigned();
+            $table->integer('slide_prev')->unsigned()->nullable();
+            $table->integer('slide_next')->unsigned()->nullable();
             $table->timestamps();
 
             $table->primary(['presentation_id', 'slide_id']);
