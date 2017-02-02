@@ -14,7 +14,8 @@ class CommentTransformer extends Transformer
             'id' =>   $comment['id'],
             'slide' => route('slides.show', ['id' => $comment['slide_id']]),
             'user' => route('user.show', ['id' => $comment['user_id']]),
-            'content' => $comment['content']
+            'content' => $comment['content'],
+            'updated_at' => $comment['updated_at']->format('Y-m-d h:m:s')
         ];
     }
 }

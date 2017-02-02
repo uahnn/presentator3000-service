@@ -18,6 +18,7 @@ class TemplateTransformer extends Transformer
             'id' =>   $template['id'],
             'title' => $template['title'],
             'markup' => $template['markup'],
+            'updated_at' => $template['updated_at']->format('Y-m-d h:m:s')
         ];
     }
 }

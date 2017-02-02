@@ -2,10 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Codebase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class CodebasesController extends Controller
 {
+    protected $codebaseTransformer;
+
+    /**
+     * CodebaseController constructor.
+     * @param $codebaseTransformer
+     */
+    public function __construct(CodebaseTransformer $codebaseTransformer)
+    {
+        $this->codebaseTransformer = $codebaseTransformer;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -13,17 +27,13 @@ class CodebasesController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $limit = Input::get('limit') ?: 15;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $codebases = Codebase::paginate($limit);
+
+        return $this->respondWithPagination($codebases, [
+            'data' => $this->codebaseTransformer->transformCollection($codebases->all())
+        ]);
     }
 
     /**

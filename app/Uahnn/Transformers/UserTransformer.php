@@ -18,6 +18,7 @@ class UserTransformer
             'name' => $user['name'],
             'email' => $user['email'],
             'userspace' => $user['userspace'],
+            'updated_at' => $user['updated_at']->format('Y-m-d h:m:s')
         ];
     }
 }

@@ -18,7 +18,8 @@ class ChannelTransformer extends Transformer
             'id' =>   $channel['id'],
             'title' => $channel['title'],
             'description' => $channel['description'],
-            'presentations' => route('channel_presentations', [$channel['id']])
+            'presentations' => route('channel_presentations', [$channel['id']]),
+            'updated_at' => $channel['updated_at']->format('Y-m-d h:m:s')
         ];
     }
 }

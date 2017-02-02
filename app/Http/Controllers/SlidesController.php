@@ -46,18 +46,24 @@ class SlidesController extends ApiController
 
         $slide = Slide::create($request->all());
 
-        if($presentationId) {
+        if ($presentationId) {
             $presentation = Presentation::findOrFail($presentationId);
 
             $prev_slide = $presentation->slides()->where('slide_next', null)->first();
 
-            $presentation->slides()->updateExistingPivot($prev_slide->id, [
-                'slide_next'    =>  $slide->id
-            ]);
+            $prev_slide_id = null;
+
+            if (!is_null($prev_slide)) {
+                $presentation->slides()->updateExistingPivot($prev_slide->id, [
+                    'slide_next' => $slide->id
+                ]);
+
+                $prev_slide_id = $prev_slide->id;
+            }
 
             $presentation->slides()->attach($slide->id, [
-                'slide_prev'    =>  $prev_slide->id,
-                'slide_next'    =>  null
+                'slide_prev' => $prev_slide_id,
+                'slide_next' => null
             ]);
         }
 
