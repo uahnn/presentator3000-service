@@ -17,6 +17,7 @@ class PresentationTransformer extends Transformer
             'id' => $presentation['id'],
             'title' => $presentation['title'],
             'description' => $presentation['description'],
+            'slides' => route('presentation_slides', ['id' => $presentation['id']]),
         ];
     }
 }

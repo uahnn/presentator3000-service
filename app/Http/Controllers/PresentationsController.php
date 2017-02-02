@@ -62,7 +62,13 @@ class PresentationsController extends ApiController
 
     public function show($id)
     {
-        //
+        $presentation = Presentation::find($id);
+
+        if(is_null($presentation)) {
+            return $this->respondNotFound();
+        }
+
+        return $this->respond($this->presentationTransformer->transform($presentation));
     }
 
 
@@ -73,12 +79,35 @@ class PresentationsController extends ApiController
 
     public function update(Request $request, $id)
     {
-        //
+        if (!$request->input('title') or !$request->input('description')) {
+            return $this->respondBadInput('Parameter failed validation for a presentation.');
+        }
+
+
+        $presi = Presentation::find($id);
+
+        if(is_null($presi)) {
+            return $this->respondNotFound();
+        }
+
+        $presi['title'] = $request->input('title');
+        $presi['description'] = $request->input('description');
+
+        $presi->save();
+
+        return $this->respondUpdated($this->presentationTransformer->transform($presi), 'Presentation successfully updated.');
     }
 
 
     public function destroy($id)
     {
-        //
+        try {
+            $presi = Presentation::find($id);
+            $presi->delete();
+        }catch(\Error $e) {
+            return $this->respondBadInput('Presentation could not be deleted.');
+        }
+
+        return $this->respondDeleted();
     }
 }

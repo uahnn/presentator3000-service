@@ -18,24 +18,35 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 */
 
-Route::get('/home', 'HomeController@index');
-
 Route::get('/', function () {
     return 'Hello World';
 });
 
 Auth::routes();
 
-// API STARTS HERE
+/*
+|-----------------------
+| API STARTS HERE
+|-----------------------
+*/
+
 Route::resource('user', 'UserController');
 
-Route::resource('presentations', 'PresentationsController');
+// PRESENTATIONS
+Route::resource('presentations', 'PresentationsController', ['only' => [
+    'index', 'store', 'show', 'update', 'destroy']]);
 
-Route::get('presentations/{id}/slides', 'SlidesController@index');
-Route::post('presentations/{id}/slides', 'SlidesController@store');
+Route::get('presentations/{id}/slides', 'SlidesController@index')->name('presentation_slides');
+Route::post('presentations/{id}/slides', 'SlidesController@store')->name('add_slide_to_presentation');
 
-Route::resource('slides', 'SlidesController');
+// SLIDES
+Route::resource('slides', 'SlidesController', ['only' => [
+    'index', 'store', 'show', 'update', 'destroy']]);
 
-Route::resource('comments', 'CommentsController');
-Route::get('slides/{id}/comments', 'Commentscontroller@index');
-Route::post('slides/{id}/comments', 'Commentscontroller@store');
+// COMMENTS
+Route::resource('comments', 'CommentsController', ['only' => [
+    'index', 'store', 'show', 'update', 'destroy']]);
+
+Route::get('slides/{id}/comments', 'Commentscontroller@index')->name('slide_comments');
+Route::post('slides/{id}/comments', 'Commentscontroller@store')->name('add_comment_to_slide');
+

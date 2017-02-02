@@ -10,7 +10,9 @@ class SlideTransformer extends Transformer
         return [
             'id' =>   $slide['id'],
             'content' => $slide['content'],
-            'shared' => (boolean) $slide['shared']
+            'shared' => (boolean) $slide['shared'],
+            'comments' => route('slide_comments', ['id' => $slide['id']]),
+
         ];
     }
 }
