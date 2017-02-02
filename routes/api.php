@@ -47,6 +47,6 @@ Route::resource('slides', 'SlidesController', ['only' => [
 Route::resource('comments', 'CommentsController', ['only' => [
     'index', 'store', 'show', 'update', 'destroy']]);
 
-Route::get('slides/{id}/comments', 'Commentscontroller@index')->name('slide_comments');
-Route::post('slides/{id}/comments', 'Commentscontroller@store')->name('add_comment_to_slide');
+Route::get('slides/{id}/comments', 'CommentsController@index')->name('slide_comments');
+Route::post('slides/{id}/comments', 'CommentsController@store')->name('add_comment_to_slide');
 
