@@ -13,6 +13,6 @@ class Channel extends Model
     }
 
     public function presentations() {
-        return $this->belongsToMany('App\Presentation');
+        return $this->belongsToMany('App\Presentation')->withPivot('presentation_prev', 'presentation_next');
     }
 }

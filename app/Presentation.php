@@ -19,7 +19,7 @@ class Presentation extends Model
     }
 
     public function channels() {
-        return $this->belongsToMany('App\Channel')->withPivot('presentation_prev', 'presentation_next');
+        return $this->belongsToMany('App\Channel');
     }
 
     public function attachements() {

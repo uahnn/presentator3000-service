@@ -15,7 +15,7 @@ class ChannelTransformer extends Transformer
     public function transform($channel)
     {
         return [
-            'id' =>   $channel['id'],
+            'id' => $channel['id'],
             'title' => $channel['title'],
             'description' => $channel['description'],
             'presentations' => route('channel_presentations', [$channel['id']]),

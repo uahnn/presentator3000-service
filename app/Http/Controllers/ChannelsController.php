@@ -12,8 +12,8 @@ class ChannelsController extends ApiController
     protected $channelTransformer;
 
     /**
-     * TemplatesController constructor.
-     * @param $templateTransformer
+     * ChannelController constructor.
+     * @param $channelTransformer
      */
     public function __construct(ChannelTransformer $channelTransformer)
     {
@@ -29,7 +29,7 @@ class ChannelsController extends ApiController
     {
         $channels = Channel::all();
 
-        return $this->respond($this->channelTransformer->transformCollection($channels->toArray()));
+        return $this->respond($this->channelTransformer->transformCollection($channels->all()));
     }
 
     /**
@@ -127,11 +127,9 @@ class ChannelsController extends ApiController
     {
         $channel = Channel::find($cid);
 
-        $channel->presentations()->attach([
-            $pid, [
-                'presentation_prev' => null,
-                'presentation_next' => null
-            ]
+        $channel->presentations()->attach($pid, [
+            'presentation_prev' => null,
+            'presentation_next' => null
         ]);
 
         return $this->respondCreated($this->channelTransformer->transform($channel));
