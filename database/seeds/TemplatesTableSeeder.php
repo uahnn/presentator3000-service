@@ -1,11 +1,10 @@
 <?php
 
-use App\Slide;
 use App\User;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 
-class CommentSeeder extends Seeder
+class TemplatesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,13 +15,12 @@ class CommentSeeder extends Seeder
     {
         $faker = Faker::create();
         $userIds = User::pluck('id')->toArray();
-        $slideIds = Slide::pluck('id')->toArray();
 
-        foreach (range(1, 30) as $index) {
-            \App\Comment::create([
-                'slide_id' => $faker->randomElement($slideIds),
+        foreach (range(1, 15) as $index) {
+            \App\Template::create([
                 'user_id' => $faker->randomElement($userIds),
-                'content' => $faker->paragraph(5)
+                'title' => $faker->sentence(3),
+                'markup' => $faker->paragraph(5)
             ]);
         }
     }

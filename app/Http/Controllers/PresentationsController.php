@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Channel;
 use App\Presentation;
 use App\Uahnn\Transformers\PresentationTransformer;
 use App\User;
@@ -24,24 +25,27 @@ class PresentationsController extends ApiController
     }
 
 
-    public function index()
+    public function index($channelId = null)
     {
+        if ($channelId) {
+            $channel = Channel::find($channelId);
 
-        $limit = Input::get('limit') ?: 15;
+            if (is_null($channel)) {
+                return $this->respondNotFound();
+            }
 
-        $presentations = Presentation::paginate($limit);
+            return $this->respond($this->presentationTransformer->transformCollection($channel->presentations->all()));
 
-        return $this->respondWithPagination($presentations, [
-            'data' => $this->presentationTransformer->transformCollection($presentations->all())
-        ]);
+        } else {
+            $limit = Input::get('limit') ?: 15;
+
+            $presentations = Presentation::paginate($limit);
+
+            return $this->respondWithPagination($presentations, [
+                'data' => $this->presentationTransformer->transformCollection($presentations->all())
+            ]);
+        }
     }
-
-
-    public function create()
-    {
-
-    }
-
 
     public function store(Request $request)
     {
@@ -52,29 +56,22 @@ class PresentationsController extends ApiController
         $user = User::find(1);
 
         $presi = $user->presentations()->create([
-            'title'     =>  $request->input('title'),
-            'description'   =>  $request->input('description')
+            'title' => $request->input('title'),
+            'description' => $request->input('description')
         ]);
 
         return $this->respondCreated($this->presentationTransformer->transform($presi), 'Presentation successfully created.');
     }
 
-
     public function show($id)
     {
         $presentation = Presentation::find($id);
 
-        if(is_null($presentation)) {
+        if (is_null($presentation)) {
             return $this->respondNotFound();
         }
 
         return $this->respond($this->presentationTransformer->transform($presentation));
-    }
-
-
-    public function edit($id)
-    {
-        //
     }
 
     public function update(Request $request, $id)
@@ -86,7 +83,7 @@ class PresentationsController extends ApiController
 
         $presi = Presentation::find($id);
 
-        if(is_null($presi)) {
+        if (is_null($presi)) {
             return $this->respondNotFound();
         }
 
@@ -98,13 +95,12 @@ class PresentationsController extends ApiController
         return $this->respondUpdated($this->presentationTransformer->transform($presi), 'Presentation successfully updated.');
     }
 
-
     public function destroy($id)
     {
         try {
             $presi = Presentation::find($id);
             $presi->delete();
-        }catch(\Error $e) {
+        } catch (\Error $e) {
             return $this->respondBadInput('Presentation could not be deleted.');
         }
 

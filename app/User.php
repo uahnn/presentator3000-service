@@ -46,4 +46,8 @@ class User extends Authenticatable
     public function plan() {
         return $this->hasOne('App\Plan');
     }
+
+    public function templates() {
+        return $this->hasMany('App\Template');
+    }
 }

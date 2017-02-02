@@ -11,4 +11,8 @@ class Channel extends Model
     public function user() {
         return $this->belongsTo('App\User');
     }
+
+    public function presentations() {
+        return $this->belongsToMany('App\Presentation');
+    }
 }

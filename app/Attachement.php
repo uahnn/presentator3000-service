@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attachement extends Model
 {
+    protected $fillable = ['filename'];
+
     public function user() {
         return $this->belongsTo('App\User');
     }

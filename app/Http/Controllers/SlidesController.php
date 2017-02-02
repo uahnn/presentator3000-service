@@ -64,6 +64,38 @@ class SlidesController extends ApiController
         return $this->respondCreated($this->slideTransformer->transform($slide), 'Slide successfully created.');
     }
 
+    public function update(Request $request, $id)
+    {
+        if (!$request->input('content') or is_null($request->input('shared'))) {
+            return $this->respondBadInput('Parameter failed validation for a slide.');
+        }
+
+        $slide = Slide::find($id);
+
+        if (is_null($slide)) {
+            return $this->respondNotFound();
+        }
+
+        $slide['content'] = $request->input('content');
+        $slide['shared'] = $request->input('shared');
+
+        $slide->save();
+
+        return $this->respondUpdated($this->slideTransformer->transform($slide), 'Slide successfully updated.');
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $slide = Slide::find($id);
+            $slide->delete();
+        } catch (\Error $e) {
+            return $this->respondBadInput('Slide could not be deleted.');
+        }
+
+        return $this->respondDeleted();
+    }
+
     private function getSlides($presentationId)
     {
         $slides = $presentationId ? Presentation::findOrFail($presentationId)->slides : Slide::all();

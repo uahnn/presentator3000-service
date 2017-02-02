@@ -16,8 +16,8 @@ class CreateChannelPresentationJoinTable extends Migration
         Schema::create('channel_presentation', function (Blueprint $table) {
             $table->integer('channel_id')->unsigned();
             $table->integer('presentation_id')->unsigned();
-            $table->integer('presentation_prev')->unsigned();
-            $table->integer('presentation_next')->unsigned();
+            $table->integer('presentation_prev')->unsigned()->nullable()->default(null);
+            $table->integer('presentation_next')->unsigned()->nullable()->default(null);
             $table->timestamps();
 
             $table->primary(['channel_id', 'presentation_id']);

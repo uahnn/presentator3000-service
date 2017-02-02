@@ -11,13 +11,15 @@ namespace App\Uahnn\Transformers;
 
 class PresentationTransformer extends Transformer
 {
-    public function transform($presentation)
-    {
+    public function transform($presentation) {
+
         return [
             'id' => $presentation['id'],
             'title' => $presentation['title'],
             'description' => $presentation['description'],
             'slides' => route('presentation_slides', ['id' => $presentation['id']]),
+            'attachements' => route('presentation_attachements', ['id' => $presentation['id']]),
+            'updated_at' => $presentation['updated_at']->format('Y-m-d h:m:s')
         ];
     }
 }

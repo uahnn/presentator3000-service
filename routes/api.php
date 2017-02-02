@@ -50,3 +50,20 @@ Route::resource('comments', 'CommentsController', ['only' => [
 Route::get('slides/{id}/comments', 'CommentsController@index')->name('slide_comments');
 Route::post('slides/{id}/comments', 'CommentsController@store')->name('add_comment_to_slide');
 
+// CHANNELS
+Route::resource('channels', 'ChannelsController', ['only' => [
+    'index', 'store', 'show', 'update', 'destroy']]);
+
+Route::get('channels/{id}/presentations', 'PresentationsController@index')->name('channel_presentations');
+Route::post('channels/{cid}/presentations/{pid}', 'ChannelsController@add')->name('add_presentation_to_channel');
+
+// TEMPLATES
+Route::resource('templates', 'TemplatesController', ['only' => [
+    'index', 'store', 'show', 'update', 'destroy']]);
+
+// ATTACHEMENTS
+Route::resource('attachements', 'AttachementsController', ['only' => [
+    'index', 'store', 'show', 'update', 'destroy']]);
+
+Route::get('presentations/{id}/attachements', 'AttachementsController@index')->name('presentation_attachements');
+Route::post('presentations/{id}/attachements', 'AttachementsController@store')->name('add_attachement_to_presentation');
