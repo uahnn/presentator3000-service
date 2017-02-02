@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         App\User::truncate();
         App\Slide::truncate();
         App\Presentation::truncate();
+        App\Comment::truncate();
         DB::table('presentation_slide')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
@@ -23,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SlidesTableSeeder::class);
         $this->call(PresentationsTableSeeder::class);
         $this->call(PresentationSlideTableSeeder::class);
+        $this->call(CommentSeeder::class);
     }
 }

@@ -61,7 +61,7 @@ class SlidesController extends ApiController
             ]);
         }
 
-        return $this->respondCreated('Slide successfully created.');
+        return $this->respondCreated($this->slideTransformer->transform($slide), 'Slide successfully created.');
     }
 
     private function getSlides($presentationId)

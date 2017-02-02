@@ -66,11 +66,25 @@ class ApiController extends Controller
         return $this->setStatusCode(IlluminateResponse::HTTP_UNPROCESSABLE_ENTITY)->respondWithError($message);
     }
 
-    public function respondCreated($message = 'Resource successfully created.')
+    public function respondCreated($data, $message = 'Resource successfully created.')
     {
         return $this->setStatusCode(IlluminateResponse::HTTP_CREATED)->respond([
+            'data' => $data,
             'message' => $message
         ]);
+    }
+
+    public function respondUpdated($data, $message = 'Resource succesfully updated.')
+    {
+        return $this->setStatusCode(IlluminateResponse::HTTP_OK)->respond([
+            'data' => $data,
+            'message' => $message
+        ]);
+    }
+
+    public function respondDeleted()
+    {
+        return $this->setStatusCode(IlluminateResponse::HTTP_NO_CONTENT)->respond(null);
     }
 
 

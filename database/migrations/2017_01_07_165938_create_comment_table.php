@@ -15,8 +15,8 @@ class CreateCommentTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('slide_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->integer('slide_id')->unsigned()->nullable()->default(null);;
+            $table->integer('user_id')->unsigned()->nullable()->default(null);;
             $table->text('content');
 
             $table->foreign('slide_id')->references('id')->on('slides')->onDelete('cascade');

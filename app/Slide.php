@@ -19,4 +19,8 @@ class Slide extends Model
         return $this->hasMany('App\Codefragment');
     }
     */
+
+    public function comments() {
+        return $this->hasMany('App\Comment');
+    }
 }

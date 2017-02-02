@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Presentation;
 use App\Uahnn\Transformers\PresentationTransformer;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -45,16 +46,17 @@ class PresentationsController extends ApiController
     public function store(Request $request)
     {
         if (!$request->input('title') or !$request->input('description')) {
-            return $this->respondBadInput('Parameter failed validation for a slide.');
+            return $this->respondBadInput('Parameter failed validation for a presentation.');
         }
 
-        Presentation::create([
-            'user_id'   =>  1,                          //TODO set to current user
+        $user = User::find(1);
+
+        $presi = $user->presentations()->create([
             'title'     =>  $request->input('title'),
             'description'   =>  $request->input('description')
         ]);
 
-        return $this->respondCreated('Slide successfully created.');
+        return $this->respondCreated($this->presentationTransformer->transform($presi), 'Presentation successfully created.');
     }
 
 

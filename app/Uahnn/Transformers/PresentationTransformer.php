@@ -14,6 +14,7 @@ class PresentationTransformer extends Transformer
     public function transform($presentation)
     {
         return [
+            'id' => $presentation['id'],
             'title' => $presentation['title'],
             'description' => $presentation['description'],
         ];

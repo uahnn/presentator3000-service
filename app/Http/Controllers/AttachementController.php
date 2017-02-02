@@ -2,19 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Uahnn\Transformers\UserTransformer;
-use App\User;
 use Illuminate\Http\Request;
 
-class UserController extends ApiController
+class AttachementController extends Controller
 {
-    protected $userTransformer;
-
-    public function __construct(UserTransformer $userTransformer)
-    {
-        $this->userTransformer = $userTransformer;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -54,13 +45,7 @@ class UserController extends ApiController
      */
     public function show($id)
     {
-        $user = User::find($id);
-
-        if (is_null($user)) {
-            return $this->respondNotFound();
-        }
-
-        return $this->respond($this->userTransformer->transform($user));
+        //
     }
 
     /**

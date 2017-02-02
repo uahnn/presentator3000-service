@@ -15,8 +15,8 @@ class CreateAttachementsTable extends Migration
     {
         Schema::create('attachements', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('presentation_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable()->default(null);;
+            $table->integer('presentation_id')->unsigned()->nullable()->default(null);;
             $table->string('filename');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

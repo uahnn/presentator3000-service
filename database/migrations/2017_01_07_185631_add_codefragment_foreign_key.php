@@ -14,7 +14,7 @@ class AddCodefragmentForeignKey extends Migration
     public function up()
     {
         Schema::table('codefragments', function (Blueprint $table) {
-            $table->integer('codebase_id')->unsigned();
+            $table->integer('codebase_id')->unsigned()->nullable()->default(null);;
             $table->foreign('codebase_id')->references('id')->on('codebases');
         });
     }

@@ -15,7 +15,7 @@ class CreatePresentationsTable extends Migration
     {
         Schema::create('presentations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable()->default(null);;
             $table->string('title');
             $table->text('description');
             $table->timestamps();
