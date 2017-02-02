@@ -12,7 +12,7 @@ class AttachementsController extends ApiController
 {
     protected $attachementTransformer;
 
-    public function __construct(attachementTransformer $attachementTransformer)
+    public function __construct(AttachementTransformer $attachementTransformer)
     {
         $this->attachementTransformer = $attachementTransformer;
     }
